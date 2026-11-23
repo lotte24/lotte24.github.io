@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plural üben</title>
+<style>
+:root{--bg:#f6f4ee;--card:#fff;--ink:#1f2933;--soft:#52606d;--line:#d5d0c4;--blue:#1d4f91;--blue-soft:#e4edf8;--ok:#1b6e3c;--ok-soft:#e1f3e7;--no:#a3271f;--no-soft:#fbe6e3;--tip:#fff5d6;--tip-line:#d9a900}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.5 Arial,Helvetica,sans-serif}
+header{background:var(--blue);color:#fff;padding:16px}
+.wrap{max-width:860px;margin:0 auto}
+h1{font-size:28px;margin:0}
+header p{margin:2px 0 0}
+#score{font-weight:bold;margin-top:6px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 16px}
+nav .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+button{font:inherit;color:inherit;min-height:50px;border-radius:9px;border:2px solid var(--line);background:#fff;padding:8px 14px;cursor:pointer;touch-action:manipulation}
+button:focus-visible,input:focus-visible{outline:3px solid #e08a00;outline-offset:2px}
+nav button{font-weight:bold;padding:6px}
+nav button[aria-selected=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+main{padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:0 0 16px}
+h2{font-size:24px;margin:0 0 10px}
+h3{font-size:20px;margin:0 0 4px}
+.merk{background:var(--blue-soft);border:2px solid var(--blue)}
+.merk p{margin:3px 0}
+.stars{color:#a86a00;letter-spacing:2px}
+.task-head{margin-bottom:10px}
+.item{border-top:1px solid var(--line);padding:12px 0}
+.line{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:8px}
+.letter{font-weight:bold;min-width:26px}
+.en{font-weight:bold}
+.wrongword{color:var(--no);text-decoration:underline wavy;font-weight:bold}
+input{font:inherit;min-height:50px;width:190px;max-width:100%;padding:6px 10px;border:2px solid #7b8794;border-radius:8px;background:#fff;color:var(--ink)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button[aria-pressed=true]{background:var(--blue-soft);border-color:var(--blue);font-weight:bold}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tip-btn{background:var(--tip);border-color:var(--tip-line);min-height:44px;padding:4px 14px}
+.tip,.msg{margin-top:8px;padding:8px 11px;border-radius:8px}
+.tip{background:var(--tip);border-left:5px solid var(--tip-line)}
+.msg.ok{background:var(--ok-soft);color:var(--ok);font-weight:bold}
+.msg.no{background:var(--no-soft);color:var(--no)}
+.item.done input,.item.done .opts button{border-color:var(--ok);background:var(--ok-soft)}
+.check{width:100%;margin-top:8px;background:var(--blue);border-color:var(--blue);color:#fff;font-weight:bold}
+table{width:100%;border-collapse:collapse;font-size:17px}
+th,td{text-align:left;border-bottom:1px solid var(--line);padding:7px 5px;vertical-align:top}
+.plan{list-style:none;padding:0;margin:0}
+.plan li{padding:5px 0;display:flex;gap:9px}
+.box{display:inline-grid;place-items:center;width:25px;height:25px;border:2px solid #7b8794;border-radius:5px;flex:none;font-weight:bold;color:var(--ok)}
+.go{width:100%;background:var(--blue);border-color:var(--blue);color:#fff;font-weight:bold}
+.reset{background:transparent;font-size:16px;width:100%}
+@media(max-width:560px){body{font-size:18px}nav button{font-size:16px}table{font-size:15px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1 id="title"></h1><p id="subtitle"></p><div id="score" aria-live="polite"></div></div></header>
+<nav><div class="wrap" id="tabs" role="tablist"></div></nav>
+<main><div class="wrap" id="view"></div></main>
+<script>
+const DATA = {"title": "Plural üben", "subtitle": "Englisch, Klasse 5", "intro": ["Du übst die Mehrzahl von englischen Wörtern.", "Arbeite die Teile A, B und C nacheinander durch.", "Beginne in jedem Teil bei einem Stern.", "Brauchst du Hilfe? Tippe auf „Tipp“."], "wordbank": [["singular", "Einzahl", "one book"], ["plural", "Mehrzahl", "two books"], ["Selbstlaut", "a, e, i, o, u", "boy: Vor dem y steht o."], ["Mitlaut", "alle anderen Buchstaben", "baby: Vor dem y steht b."], ["unregelmäßig", "folgt keiner Regel, du lernst es auswendig", "one man, two men"], ["this / these", "dieser, diese, dieses / diese (Mehrzahl)", "this book, these books"]], "parts": [{"id": "A", "title": "Plural mit -s", "merk": ["Die meisten Wörter bekommen in der Mehrzahl ein -s.", "one book, two books", "Steht vor dem y ein Selbstlaut, bleibt das y: one boy, two boys."], "tasks": [{"level": 1, "task": "Tippe auf die richtige Mehrzahl.", "items": [{"id": "A1a", "kind": "choose", "word": "book", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: cat → cats", "feedback": "Hänge einfach -s an. Beispiel: cat → cats", "answer": "books", "options": ["book", "books", "bookes"]}, {"id": "A1b", "kind": "choose", "word": "pen", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "pens", "options": ["pens", "pen", "penes"]}, {"id": "A1c", "kind": "choose", "word": "dog", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "dogs", "options": ["dogs", "dog", "doges"]}, {"id": "A1d", "kind": "choose", "word": "apple", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "apples", "options": ["apple", "apples", "applees"]}], "id": "A1"}, {"level": 1, "task": "Einzahl oder Mehrzahl? Tippe auf die richtige Antwort.", "items": [{"id": "A2a", "kind": "number", "word": "cats", "answer": "Mehrzahl", "options": ["Einzahl", "Mehrzahl"], "hint1": "Schau auf das Wortende.", "hint2": "Ein -s am Ende zeigt hier die Mehrzahl.", "feedback": "Ein -s am Ende zeigt hier die Mehrzahl. Ohne -s ist es die Einzahl."}, {"id": "A2b", "kind": "number", "word": "table", "answer": "Einzahl", "options": ["Einzahl", "Mehrzahl"], "hint1": "Schau auf das Wortende.", "hint2": "Ein -s am Ende zeigt hier die Mehrzahl.", "feedback": "Ein -s am Ende zeigt hier die Mehrzahl. Ohne -s ist es die Einzahl."}, {"id": "A2c", "kind": "number", "word": "friends", "answer": "Mehrzahl", "options": ["Einzahl", "Mehrzahl"], "hint1": "Schau auf das Wortende.", "hint2": "Ein -s am Ende zeigt hier die Mehrzahl.", "feedback": "Ein -s am Ende zeigt hier die Mehrzahl. Ohne -s ist es die Einzahl."}, {"id": "A2d", "kind": "number", "word": "bag", "answer": "Einzahl", "options": ["Einzahl", "Mehrzahl"], "hint1": "Schau auf das Wortende.", "hint2": "Ein -s am Ende zeigt hier die Mehrzahl.", "feedback": "Ein -s am Ende zeigt hier die Mehrzahl. Ohne -s ist es die Einzahl."}], "id": "A2"}, {"level": 2, "task": "Schreibe die Mehrzahl.", "items": [{"id": "A3a", "kind": "write", "word": "chair", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "chairs"}, {"id": "A3b", "kind": "write", "word": "teacher", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "teachers"}, {"id": "A3c", "kind": "write", "word": "ruler", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "rulers"}, {"id": "A3d", "kind": "write", "word": "school", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "schools"}], "id": "A3"}, {"level": 2, "task": "Schreibe die Mehrzahl. Achte auf das y.", "items": [{"id": "A4a", "kind": "write", "word": "key", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "feedback": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "answer": "keys"}, {"id": "A4b", "kind": "write", "word": "boy", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: day → days", "feedback": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: day → days", "answer": "boys"}, {"id": "A4c", "kind": "write", "word": "day", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "feedback": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "answer": "days"}, {"id": "A4d", "kind": "write", "word": "toy", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "feedback": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "answer": "toys"}], "id": "A4"}, {"level": 3, "task": "Setze das Wort in der Mehrzahl ein.", "items": [{"id": "A5a", "kind": "gap", "word": "pencil", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "pencils", "text": "I have two ___ in my bag."}, {"id": "A5b", "kind": "gap", "word": "window", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "windows", "text": "There are four ___ in the classroom."}, {"id": "A5c", "kind": "gap", "word": "friend", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "friends", "text": "My ___ are in the garden."}, {"id": "A5d", "kind": "gap", "word": "bird", "hint1": "Schau auf das Wortende. Gibt es eine Besonderheit?", "hint2": "Hänge einfach -s an. Beispiel: book → books", "feedback": "Hänge einfach -s an. Beispiel: book → books", "answer": "birds", "text": "We can see three ___ in the tree."}], "id": "A5"}]}, {"id": "B", "title": "Plural mit -es, -ies, -ves", "merk": ["Nach s, ss, sh, ch, x und oft nach o steht -es: bus, buses.", "Nach Mitlaut + y wird aus y -ies: baby, babies.", "Aus f oder fe wird oft -ves: knife, knives."], "tasks": [{"level": 1, "task": "Welche Endung bekommt das Wort? Tippe darauf.", "items": [{"id": "B1a", "kind": "rule", "word": "bus", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: box → boxes", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: box → boxes", "answer": "-es", "options": ["-s", "-es", "-ies", "-ves"]}, {"id": "B1b", "kind": "rule", "word": "baby", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: city → cities", "feedback": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: city → cities", "answer": "-ies", "options": ["-s", "-es", "-ies", "-ves"]}, {"id": "B1c", "kind": "rule", "word": "knife", "hint1": "Das Wort endet auf f oder fe.", "hint2": "Aus f oder fe wird -ves. Beispiel: leaf → leaves", "feedback": "Aus f oder fe wird -ves. Beispiel: leaf → leaves", "answer": "-ves", "options": ["-s", "-es", "-ies", "-ves"]}, {"id": "B1d", "kind": "rule", "word": "toy", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "feedback": "Vor dem y steht ein Selbstlaut. Das y bleibt, dann kommt -s. Beispiel: boy → boys", "answer": "-s", "options": ["-s", "-es", "-ies", "-ves"]}], "id": "B1"}, {"level": 1, "task": "Tippe auf die richtige Mehrzahl.", "items": [{"id": "B2a", "kind": "choose", "word": "box", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "boxes", "options": ["box", "boxs", "boxes"]}, {"id": "B2b", "kind": "choose", "word": "watch", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "watches", "options": ["watches", "watchs", "watch"]}, {"id": "B2c", "kind": "choose", "word": "city", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: baby → babies", "feedback": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: baby → babies", "answer": "cities", "options": ["citys", "cities", "cityes"]}, {"id": "B2d", "kind": "choose", "word": "leaf", "hint1": "Das Wort endet auf f oder fe.", "hint2": "Aus f oder fe wird -ves. Beispiel: knife → knives", "feedback": "Aus f oder fe wird -ves. Beispiel: knife → knives", "answer": "leaves", "options": ["leaves", "leafes", "leafs"]}], "id": "B2"}, {"level": 2, "task": "Schreibe die Mehrzahl. Alle Wörter bekommen -es.", "items": [{"id": "B3a", "kind": "write", "word": "dish", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "dishes"}, {"id": "B3b", "kind": "write", "word": "class", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "classes"}, {"id": "B3c", "kind": "write", "word": "tomato", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "tomatoes"}, {"id": "B3d", "kind": "write", "word": "potato", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "potatoes"}], "id": "B3"}, {"level": 2, "task": "Schreibe die Mehrzahl. Achte auf y und f.", "items": [{"id": "B4a", "kind": "write", "word": "family", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: baby → babies", "feedback": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: baby → babies", "answer": "families"}, {"id": "B4b", "kind": "write", "word": "party", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: baby → babies", "feedback": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: baby → babies", "answer": "parties"}, {"id": "B4c", "kind": "write", "word": "shelf", "hint1": "Das Wort endet auf f oder fe.", "hint2": "Aus f oder fe wird -ves. Beispiel: knife → knives", "feedback": "Aus f oder fe wird -ves. Beispiel: knife → knives", "answer": "shelves"}, {"id": "B4d", "kind": "write", "word": "wolf", "hint1": "Das Wort endet auf f oder fe.", "hint2": "Aus f oder fe wird -ves. Beispiel: knife → knives", "feedback": "Aus f oder fe wird -ves. Beispiel: knife → knives", "answer": "wolves"}], "id": "B4"}, {"level": 3, "task": "Ein Wort ist falsch. Schreibe es richtig.", "items": [{"id": "B5a", "kind": "fix", "word": "baby", "hint1": "Schau auf den Buchstaben vor dem y.", "hint2": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: city → cities", "feedback": "Vor dem y steht ein Mitlaut. Aus y wird -ies. Beispiel: city → cities", "answer": "babies", "text": "There are two babys in the park.", "wrong": "babys"}, {"id": "B5b", "kind": "fix", "word": "box", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "boxes", "text": "The boxs are on the floor.", "wrong": "boxs"}, {"id": "B5c", "kind": "fix", "word": "knife", "hint1": "Das Wort endet auf f oder fe.", "hint2": "Aus f oder fe wird -ves. Beispiel: leaf → leaves", "feedback": "Aus f oder fe wird -ves. Beispiel: leaf → leaves", "answer": "knives", "text": "We need four knifes for dinner.", "wrong": "knifes"}, {"id": "B5d", "kind": "fix", "word": "dish", "hint1": "Schau auf die letzten Buchstaben.", "hint2": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "feedback": "Nach s, ss, sh, ch, x und oft nach o steht -es. Beispiel: bus → buses", "answer": "dishes", "text": "Can you wash the dishs, please?", "wrong": "dishs"}], "id": "B5"}]}, {"id": "C", "title": "Unregelmäßiger Plural und Sätze", "merk": ["Manche Wörter ändern sich ganz: man, men und child, children.", "Bei sheep bleibt die Mehrzahl gleich.", "Bei der Mehrzahl steht these und are: These mice are small."], "tasks": [{"level": 1, "task": "Tippe auf die richtige Mehrzahl.", "items": [{"id": "C1a", "kind": "choose", "word": "child", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "children", "options": ["childs", "children", "childrens"]}, {"id": "C1b", "kind": "choose", "word": "man", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: child → children", "feedback": "Lerne das Wortpaar auswendig. Beispiel: child → children", "answer": "men", "options": ["mens", "men", "mans"]}, {"id": "C1c", "kind": "choose", "word": "foot", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "feet", "options": ["feet", "foots", "feets"]}, {"id": "C1d", "kind": "choose", "word": "mouse", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "mice", "options": ["mice", "mices", "mouses"]}], "id": "C1"}, {"level": 1, "task": "Tippe auf die richtige Mehrzahl.", "items": [{"id": "C2a", "kind": "choose", "word": "tooth", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "teeth", "options": ["teeths", "teeth", "tooths"]}, {"id": "C2b", "kind": "choose", "word": "woman", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "women", "options": ["women", "womans", "womens"]}, {"id": "C2c", "kind": "choose", "word": "sheep", "hint1": "Dieses Wort ist besonders.", "hint2": "Die Mehrzahl sieht genauso aus wie die Einzahl.", "feedback": "Die Mehrzahl sieht genauso aus wie die Einzahl.", "answer": "sheep", "options": ["sheeps", "sheep", "sheepes"]}, {"id": "C2d", "kind": "choose", "word": "person", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "people", "options": ["people", "persons", "peoples"]}], "id": "C2"}, {"level": 2, "task": "Schreibe die Mehrzahl.", "items": [{"id": "C3a", "kind": "write", "word": "woman", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "women"}, {"id": "C3b", "kind": "write", "word": "child", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "children"}, {"id": "C3c", "kind": "write", "word": "foot", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "feet"}, {"id": "C3d", "kind": "write", "word": "tooth", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "teeth"}], "id": "C3"}, {"level": 2, "task": "Tippe auf das richtige Wort.", "items": [{"id": "C4a", "kind": "agree", "text": "___ children are in my class.", "options": ["This", "These"], "answer": "These", "hint1": "Ist „children“ Einzahl oder Mehrzahl?", "hint2": "Einzahl: this und is. Mehrzahl: these und are.", "feedback": "„children“ ist Mehrzahl. Einzahl: this und is. Mehrzahl: these und are."}, {"id": "C4b", "kind": "agree", "text": "___ man is my teacher.", "options": ["This", "These"], "answer": "This", "hint1": "Ist „man“ Einzahl oder Mehrzahl?", "hint2": "Einzahl: this und is. Mehrzahl: these und are.", "feedback": "„man“ ist Einzahl. Einzahl: this und is. Mehrzahl: these und are."}, {"id": "C4c", "kind": "agree", "text": "The mice ___ small.", "options": ["is", "are"], "answer": "are", "hint1": "Ist „mice“ Einzahl oder Mehrzahl?", "hint2": "Einzahl: this und is. Mehrzahl: these und are.", "feedback": "„mice“ ist Mehrzahl. Einzahl: this und is. Mehrzahl: these und are."}, {"id": "C4d", "kind": "agree", "text": "My foot ___ cold.", "options": ["is", "are"], "answer": "is", "hint1": "Ist „foot“ Einzahl oder Mehrzahl?", "hint2": "Einzahl: this und is. Mehrzahl: these und are.", "feedback": "„foot“ ist Einzahl. Einzahl: this und is. Mehrzahl: these und are."}], "id": "C4"}, {"level": 3, "task": "Ein Wort ist falsch. Schreibe es richtig.", "items": [{"id": "C5a", "kind": "fix", "word": "child", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "children", "text": "The childs are in the garden.", "wrong": "childs"}, {"id": "C5b", "kind": "fix", "word": "foot", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "feet", "text": "My foots are cold.", "wrong": "foots"}, {"id": "C5c", "kind": "fix", "word": "mouse", "hint1": "Dieses Wort ist unregelmäßig. Es bekommt kein -s.", "hint2": "Lerne das Wortpaar auswendig. Beispiel: man → men", "feedback": "Lerne das Wortpaar auswendig. Beispiel: man → men", "answer": "mice", "text": "Two mouses are under the bed.", "wrong": "mouses"}, {"id": "C5d", "kind": "fix", "word": "sheep", "hint1": "Dieses Wort ist besonders.", "hint2": "Die Mehrzahl sieht genauso aus wie die Einzahl.", "feedback": "Die Mehrzahl sieht genauso aus wie die Einzahl.", "answer": "sheep", "text": "Three sheeps are on the hill.", "wrong": "sheeps"}], "id": "C5"}]}]};
+const KEY = "plural-uebung-klasse5-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
+let current = "start";
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+const en = (text, cls) => { const s = el("span", cls || "en", text); s.lang = "en"; return s; };
+const nb = t => t.replace(/(^|[\s(„])-(s|es|ies|ves)\b/g, "$1‑$2");
+const norm = s => (s || "").trim().replace(/\s+/g, " ").toLowerCase();
+const allItems = () => DATA.parts.flatMap(p => p.tasks.flatMap(t => t.items));
+const st = id => state[id] || (state[id] = {});
+const taskDone = t => t.items.every(i => st(i.id).ok);
+function score() {
+  const all = allItems();
+  document.getElementById("score").textContent = all.filter(i => st(i.id).ok).length + " von " + all.length + " richtig";
+}
+function tabs() {
+  const box = document.getElementById("tabs"); box.textContent = "";
+  [["start", "Start"], ...DATA.parts.map(p => [p.id, "Teil " + p.id])].forEach(([id, label]) => {
+    const b = el("button", "", label); b.role = "tab"; b.setAttribute("aria-selected", current === id);
+    b.onclick = () => go(id); box.append(b);
+  });
+}
+function go(id) { current = id; tabs(); render(); window.scrollTo(0, 0); }
+function renderStart(v) {
+  const a = el("section", "card"); a.append(el("h2", "", "So arbeitest du"));
+  DATA.intro.forEach(t => a.append(el("p", "", t)));
+  const b = el("section", "card"); b.append(el("h2", "", "Wortspeicher"));
+  const table = el("table"); const head = el("tr");
+  ["Wort", "Bedeutung", "Beispiel"].forEach(t => head.append(el("th", "", t))); table.append(head);
+  DATA.wordbank.forEach(r => { const tr = el("tr"); r.forEach(c => tr.append(el("td", "", c))); table.append(tr); });
+  b.append(table);
+  const c = el("section", "card"); c.append(el("h2", "", "Mein Plan"));
+  const ul = el("ul", "plan");
+  DATA.parts.forEach(p => p.tasks.forEach((t, n) => {
+    const li = el("li"); const done = taskDone(t);
+    const box = el("span", "box", done ? "✓" : ""); box.setAttribute("aria-label", done ? "erledigt" : "offen");
+    li.append(box, el("span", "", "Teil " + p.id + ", Aufgabe " + (n + 1) + " " + "★".repeat(t.level))); ul.append(li);
+  }));
+  c.append(ul);
+  const go1 = el("button", "go", "Los geht's mit Teil A"); go1.onclick = () => go("A");
+  const reset = el("button", "reset", "Alles zurücksetzen");
+  reset.onclick = () => { if (confirm("Willst du wirklich alle Antworten löschen?")) { state = {}; save(); score(); render(); } };
+  const d = el("div", "card"); d.append(go1); d.style.display = "grid"; d.style.gap = "8px"; d.append(reset);
+  v.append(a, b, c, d);
+}
+function renderItem(it, letter) {
+  const s = st(it.id); const box = el("div", "item" + (s.ok ? " done" : "")); box.dataset.id = it.id;
+  const line = el("div", "line"); line.append(el("span", "letter", letter + ")"));
+  const makeInput = () => {
+    const i = document.createElement("input"); i.value = s.value || ""; i.disabled = !!s.ok; i.lang = "en";
+    i.setAttribute("autocomplete", "off"); i.setAttribute("autocorrect", "off"); i.setAttribute("autocapitalize", "none"); i.spellcheck = false;
+    i.setAttribute("aria-label", "Antwort " + letter); i.oninput = () => { s.value = i.value; save(); }; return i;
+  };
+  const addSentence = (mid) => { const [x, y] = it.text.split(mid.split); if (x) line.append(en(x, "")); line.append(mid.node); if (y) line.append(en(y, "")); };
+  if (it.kind === "write") { line.append(en(it.word), el("span", "", "→"), makeInput()); }
+  else if (it.kind === "gap") { addSentence({ split: "___", node: makeInput() }); line.append(el("span", "", "(" + it.word + ")")); }
+  else if (it.kind === "fix") { addSentence({ split: it.wrong, node: en(it.wrong, "wrongword") }); }
+  else if (it.kind === "agree") { addSentence({ split: "___", node: el("span", "en", "_____") }); }
+  else { line.append(en(it.word)); }
+  box.append(line);
+  if (it.kind === "fix") { const l2 = el("div", "line"); l2.append(el("span", "", "Richtig:"), makeInput()); box.append(l2); }
+  if (it.options) {
+    const opts = el("div", "opts");
+    it.options.forEach(o => {
+      const b = el("button", "", o); b.type = "button"; if (o !== "Einzahl" && o !== "Mehrzahl") b.lang = "en";
+      b.setAttribute("aria-pressed", s.value === o); b.disabled = !!s.ok;
+      b.onclick = () => { s.value = o; save(); opts.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); };
+      opts.append(b);
+    });
+    box.append(opts);
+  }
+  const controls = el("div", "controls");
+  const tipBtn = el("button", "tip-btn", "Tipp"); tipBtn.type = "button";
+  const tips = el("div");
+  const drawTips = () => {
+    tips.textContent = ""; const n = s.tips || 0;
+    if (n > 0) tips.append(el("div", "tip", nb("Tipp 1: " + it.hint1)));
+    if (n > 1) tips.append(el("div", "tip", nb("Tipp 2: " + it.hint2)));
+    tipBtn.hidden = n >= 2 || !!s.ok; tipBtn.textContent = n === 1 ? "Noch ein Tipp" : "Tipp";
+  };
+  tipBtn.onclick = () => { s.tips = (s.tips || 0) + 1; save(); drawTips(); };
+  drawTips(); controls.append(tipBtn); box.append(controls, tips);
+  const msg = el("div"); msg.setAttribute("role", "status"); box.append(msg);
+  if (s.checked) showMsg(msg, it, s);
+  return box;
+}
+function showMsg(msg, it, s) {
+  if (s.ok) { msg.className = "msg ok"; msg.textContent = "Richtig: " + it.answer; return; }
+  msg.className = "msg no";
+  if (!norm(s.value)) { msg.textContent = "Du hast noch nichts eingegeben."; return; }
+  if (it.word && it.kind !== "number" && it.kind !== "rule" && norm(s.value) === it.word && it.answer !== it.word) { msg.textContent = "Das ist noch die Einzahl. Bilde die Mehrzahl."; return; }
+  msg.textContent = nb("Noch nicht richtig. " + it.feedback);
+}
+function check(task) {
+  task.items.forEach(it => { const s = st(it.id); if (s.ok) return; s.checked = true; s.ok = norm(s.value) === norm(it.answer); });
+  save(); score(); const y = window.scrollY; render(); window.scrollTo(0, y);
+}
+function renderPart(v, part) {
+  const m = el("section", "card merk"); m.append(el("h2", "", "Teil " + part.id + ": " + part.title));
+  part.merk.forEach(t => m.append(el("p", "", nb(t)))); v.append(m);
+  part.tasks.forEach((t, n) => {
+    const c = el("section", "card"); c.dataset.task = t.id;
+    const head = el("div", "task-head"); const h = el("h3", "", "Aufgabe " + (n + 1) + " ");
+    const star = el("span", "stars", "★".repeat(t.level)); star.setAttribute("aria-label", t.level + " von 3 Sternen"); h.append(star);
+    head.append(h, el("div", "", t.task)); c.append(head);
+    t.items.forEach((it, i) => c.append(renderItem(it, "abcd"[i])));
+    const ok = t.items.filter(i => st(i.id).ok).length;
+    const btn = el("button", "check", ok === 4 ? "Geschafft: 4 von 4 richtig" : "Prüfen (" + ok + " von 4 richtig)");
+    btn.disabled = ok === 4; btn.onclick = () => check(t); c.append(btn); v.append(c);
+  });
+  const idx = DATA.parts.indexOf(part), next = DATA.parts[idx + 1];
+  const nav = el("button", "go", next ? "Weiter zu Teil " + next.id : "Zurück zum Plan");
+  nav.onclick = () => go(next ? next.id : "start"); v.append(nav);
+}
+function render() {
+  const v = document.getElementById("view"); v.textContent = "";
+  if (current === "start") renderStart(v); else renderPart(v, DATA.parts.find(p => p.id === current));
+}
+document.getElementById("title").textContent = DATA.title;
+document.getElementById("subtitle").textContent = DATA.subtitle;
+tabs(); score(); render();
+</script>
+</body>
+</html>
